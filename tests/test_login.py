@@ -8,7 +8,7 @@ from pages.login_page import LoginPage
 from pages.logout_page import LogoutPage
 from pages.my_account_page import MyAccountPage
 
-@pytest.mark.skip(reason = 'Skipping the test for now')
+# @pytest.mark.skip(reason = 'Skipping the test for now')
 @pytest.mark.end_to_end
 @pytest.mark.regression
 @pytest.mark.sanity

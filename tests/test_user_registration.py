@@ -6,7 +6,7 @@ from pages.header_page import HeaderPage
 from pages.registration_page import RegistrationPage
 from utilities.random_data_util import RandomDataUtil
 
-@pytest.mark.skip(reason = 'Skipping the test for now')
+# @pytest.mark.skip(reason = 'Skipping the test for now')
 @pytest.mark.smoke
 @pytest.mark.datadriven
 def test_user_registration(page):

@@ -4,7 +4,7 @@ import pytest
 from pages.home_page import HomePage
 from pages.search_results_page import SearchResultsPage
 
-@pytest.mark.skip(reason = 'Skipping the test for now')
+# @pytest.mark.skip(reason = 'Skipping the test for now')
 @pytest.mark.regression
 @pytest.mark.smoke
 def test_product_search(page):
