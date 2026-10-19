@@ -20,7 +20,7 @@ for _key in ("email", "password"):
         os.environ.setdefault(f"OPENCART_{_key.upper()}", _value)
 
 class Config:
-    store_url = "http://localhost/opencart/upload/"
+    store_url = os.getenv("OPENCART_STORE_URL") or "http://localhost/opencart/upload/"
     email = os.getenv("OPENCART_EMAIL", "")
     password = os.getenv("OPENCART_PASSWORD", "")
     invalid_email = "pavanol123@abc.com"

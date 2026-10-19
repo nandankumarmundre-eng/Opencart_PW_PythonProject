@@ -8,9 +8,10 @@ jobs:
   playwright:
     name: 'Playwright Tests'
     runs-on: ubuntu-latest
-    container:
-      image: mcr.microsoft.com/playwright/python:v1.55.0-noble
-      options: --user 1001
+    env:
+      OPENCART_EMAIL: ${{ secrets.OPENCART_EMAIL }}
+      OPENCART_PASSWORD: ${{ secrets.OPENCART_PASSWORD }}
+      OPENCART_STORE_URL: ${{ vars.OPENCART_STORE_URL }}
     steps:
       - uses: actions/checkout@v5
       - name: Set up Python
@@ -21,5 +22,6 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           python -m pip install -r requirements.txt
+          python -m playwright install --with-deps chromium
       - name: Run your tests
         run: python -m pytest
