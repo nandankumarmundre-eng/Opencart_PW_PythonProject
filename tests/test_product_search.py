@@ -1,9 +1,11 @@
 from playwright.sync_api import expect
+import pytest
 
 from pages.home_page import HomePage
 from pages.search_results_page import SearchResultsPage
 
-
+@pytest.mark.regression
+@pytest.mark.smoke
 def test_product_search(page):
     product_name = "iPhone"
     home_page = HomePage(page)

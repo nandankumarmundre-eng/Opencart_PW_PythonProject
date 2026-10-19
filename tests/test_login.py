@@ -1,4 +1,5 @@
 import re
+import pytest
 
 from playwright.sync_api import expect
 from config import Config
@@ -7,7 +8,8 @@ from pages.login_page import LoginPage
 from pages.logout_page import LogoutPage
 from pages.my_account_page import MyAccountPage
 
-
+@pytest.mark.end_to_end
+@pytest.mark.regression
 def test_login_with_valid_credentails(page):
     assert Config.email and Config.password, "Login credentials are missing from config.Config"
     page.goto(Config.store_url)
@@ -28,7 +30,8 @@ def test_login_with_valid_credentails(page):
         "You have been logged off your account."
     )
 
-
+@pytest.mark.end_to_end
+@pytest.mark.smoke
 def test_login_with_invalid_credentails(page):
     page.goto(Config.store_url)
     header_page = HeaderPage(page)

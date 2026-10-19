@@ -1,11 +1,13 @@
 from playwright.sync_api import expect
+import pytest
 
 from config import Config
 from pages.header_page import HeaderPage
 from pages.registration_page import RegistrationPage
 from utilities.random_data_util import RandomDataUtil
 
-
+@pytest.mark.smoke
+@pytest.mark.datadriven
 def test_user_registration(page):
     page.goto(Config.store_url)
     header_page = HeaderPage(page)
