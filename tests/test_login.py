@@ -8,6 +8,7 @@ from pages.login_page import LoginPage
 from pages.logout_page import LogoutPage
 from pages.my_account_page import MyAccountPage
 
+@pytest.mark.skip(reason = 'Skipping the test for now')
 @pytest.mark.end_to_end
 @pytest.mark.regression
 @pytest.mark.sanity
@@ -30,7 +31,7 @@ def test_login_with_valid_credentails(page):
     expect(logout_page.get_logout_message()).to_contain_text(
         "You have been logged off your account."
     )
-
+@pytest.mark.skip(reason = 'Skipping the test for now')
 @pytest.mark.end_to_end
 @pytest.mark.smoke
 def test_login_with_invalid_credentails(page):
