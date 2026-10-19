@@ -1,6 +1,7 @@
 import pytest
 import allure
 from pathlib import Path
+from config import Config
 from playwright.sync_api import Dialog, Error as PlaywrightError, Page, sync_playwright
 
 # ========================================================================
@@ -25,7 +26,7 @@ def pytest_addoption(parser):
     parser.addoption("--browser", default="chromium", help="Browser: chromium, firefox, webkit")
     parser.addoption("--headed", action="store_true", default=False, help="Run in headed (visible) mode")
     parser.addoption("--headless", dest="headed", action="store_false", help="Run in headless mode")
-    parser.addoption("--base-url", default="https://tutorialsninja.com/demo/", help="Base URL for tests")
+    parser.addoption("--base-url", default=Config.practice_url, help="Base URL for tests")
     parser.addoption("--video", default="retain-on-failure", help="Record video: on, off, retain-on-failure")
     parser.addoption("--screenshot", default="only-on-failure", help="Take screenshot: on, off, only-on-failure")
     parser.addoption("--tracing", default="retain-on-failure", help="Tracing: on, off, retain-on-failure")

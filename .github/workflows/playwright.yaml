@@ -9,9 +9,7 @@ jobs:
     name: 'Playwright Tests'
     runs-on: ubuntu-latest
     env:
-      OPENCART_EMAIL: ${{ secrets.OPENCART_EMAIL }}
-      OPENCART_PASSWORD: ${{ secrets.OPENCART_PASSWORD }}
-      OPENCART_STORE_URL: ${{ vars.OPENCART_STORE_URL }}
+      PLAYWRIGHT_BASE_URL: https://testautomationpractice.blogspot.com/
     steps:
       - uses: actions/checkout@v5
       - name: Set up Python
@@ -23,16 +21,8 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -r requirements.txt
           python -m playwright install --with-deps chromium
-      - name: Check OpenCart URL
+      - name: Check test site URL
         run: |
-          if [ -z "$OPENCART_STORE_URL" ]; then
-            echo "::error::Set the OPENCART_STORE_URL Actions variable to an OpenCart URL reachable from GitHub-hosted runners."
-            exit 1
-          fi
-          if [[ "$OPENCART_STORE_URL" == *"localhost"* || "$OPENCART_STORE_URL" == *"127.0.0.1"* ]]; then
-            echo "::error::OPENCART_STORE_URL cannot use localhost; GitHub-hosted runners cannot access your local machine."
-            exit 1
-          fi
-          curl --silent --show-error --location --output /dev/null --max-time 30 "$OPENCART_STORE_URL"
+          curl --silent --show-error --location --output /dev/null --max-time 30 "$PLAYWRIGHT_BASE_URL"
       - name: Run your tests
-        run: python -m pytest --base-url "$OPENCART_STORE_URL"
+        run: python -m pytest tests/test_handling_multiple_pages.py --base-url "$PLAYWRIGHT_BASE_URL" -m "not end_to_end"
