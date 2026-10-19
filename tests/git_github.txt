@@ -56,6 +56,8 @@ PyYAML
 
 and playwright install command - need to run and install through command prompt manaually
 -----------------------------------------------------------------------------------------
+existing github account : Githgub name - nandankumarmundre-eng! 
+
 1. install git in the desktop.
 C:\Users\wealt\PW_PythonProject_Opencart - through terminal/git bash here and 'git init' you run the command to initiate the empty repository.
 2. Need to provide your name and email address for tracking purpose to track all your files, and changes..
@@ -63,7 +65,7 @@ git config --global user.name "nandankumar"
 git config --global user.email "nandankumarmundre@gmail.com"
 
 3. first time only to add all the files and folders to staging
-git add -a or git add .
+git add -A or git add .
 
 or add a specific file then 
 git add filename
@@ -74,9 +76,9 @@ git add *.py
 or add all files within a folder:
 git and foldername
 
+after adding all files using to git using git add -A and type 'git status' all files will be in green (changed from red)
 
-
-
-nandankumarmundre-eng!
-
+1. staging git add -A (first time to add all files at one go)
+2. git status
+3. git commit -m  (to commit all files to a local repository) all files changes from green to white.
 
