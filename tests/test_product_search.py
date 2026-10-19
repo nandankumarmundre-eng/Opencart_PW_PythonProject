@@ -4,7 +4,6 @@ import pytest
 from pages.home_page import HomePage
 from pages.search_results_page import SearchResultsPage
 
-# @pytest.mark.skip(reason = 'Skipping the test for now')
 @pytest.mark.regression
 @pytest.mark.smoke
 def test_product_search(page):
@@ -16,7 +15,7 @@ def test_product_search(page):
     home_page.search_for_product(product_name)
 
     expect(page).to_have_url(
-        f"http://localhost/opencart/upload/index.php?route=product/search&search={product_name}"        
+        f"https://tutorialsninja.com/demo/index.php?route=product/search&search={product_name}"        
     )
     expect(search_results_page.page_heading).to_have_text(
         f"Search - {product_name}"

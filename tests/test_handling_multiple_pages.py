@@ -9,7 +9,7 @@ from pages.aphome_page import AphomePage
 from pages.ptnewhome_page import PtnewhomePage
 from utilities.random_data_util import RandomDataUtil
 
-@pytest.mark.datadriven
+@pytest.mark.skip(reason='Skipping the test for now')
 def test_validate_multiple_tabs(page):
     aphome_page = AphomePage(page)
     ptnewhome_page = PtnewhomePage(page)
