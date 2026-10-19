@@ -1,0 +1,2 @@
+[     774ms] [VERBOSE] [DOM] Input elements should have autocomplete attributes (suggested: "new-password"): (More info: https://goo.gl/9p2vKq) %o @ http://localhost/opencart/upload/index.php?route=account/register:0
+[     775ms] [VERBOSE] [DOM] Input elements should have autocomplete attributes (suggested: "new-password"): (More info: https://goo.gl/9p2vKq) %o @ http://localhost/opencart/upload/index.php?route=account/register:0

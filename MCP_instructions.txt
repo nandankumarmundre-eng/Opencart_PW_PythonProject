@@ -1,0 +1,236 @@
+Web Automation
+
+Prompt1: 
+
+Generate and execute a Playwright test using pytest and Playwright MCP. 
+
+Test Senario:
+
+Open http://www.automationpractice.pl/index.php
+
+Search for 'T-shirts'
+
+Verify that 'Faded Short Sleeve T-shirts' is displayed in the search results
+
+Implementation Requirements:
+
+Use pytest-style structure (functions starting with test_).
+
+Execute each step interactively through Playwright MCP tools.
+
+Once all steps succeed, generate and save the final test script as tests/aitesting/search_product.py
+
+Run the saved test automatically in headed mode (browser visible).
+
+If any step or assertion fails, identify and fix the issue, then rerun until the test passes.
+
+Expected Output:
+
+A fully working Playwright + pytest test script.
+
+The scripts should automate the complete flow described above and successfully validate the product name in the results.
+
+Web Automation
+
+Prompt2: 
+
+Generate and execute a Playwright test using pytest and Playwright MCP.
+
+Test Scenario:
+
+Open the URL: https://www.demoblaze.com/index.html
+Click on the 'Log in' link in the top navigation bar.
+Enter pavanol in the Username field.
+Enter test@123 in the Password field.
+Click on the 'Log in' button.
+Verify that the 'Log out' link is visible.
+Verify that the text 'Welcome pavanol' appears at the top right of the page.
+Click on the 'Log out' link.
+Verify that the 'Log in' link is visible again after logging out.
+
+Implementation Requirements:
+
+Apply the Page Object Model (POM) design pattern for page structure and element management.
+Save all page object files inside the project's tests/aitesting/ directory.
+Follow the pytest-style convention (fucntions starting with test_).
+Execute each step interactively using Playwright MCP tools to validate flow and elements.
+Once all steps are validated successfully, generate and save the final test script as tests/aitesting/test_login_logout.py
+automatically execute the saved test in headed mode (browser visible).
+If any step or assertion fails, analyze, fix, and rerun the test until it passes successfully.
+
+API Automation
+
+Prompt:
+Generate and execute an API test using pytest and Playwright MCP.
+
+Test Scenario:
+
+Set the API endpoint to https://fakestoreapi.com/products/1
+Send a GET request to the endpoint.
+Verify the response status code is 200.
+Validate that the response JSON contains the keys:
+id, title, price, category, and description.
+Verify the JSON response includes the following expected values:
+{
+  "id": 1,
+  "price": 109.95,
+  "category": "men's clothing"
+}
+Log/print the complete response body to the console as an output.
+
+Implementation Requirements:
+Follow the pytest-style structure (functions start with test_).
+Execute each step interactively using Playwright MCP tools for validation.
+After successful validation, save the generated script as tests/aitesting/test_apitest_mcp.py.
+If any step or assertion fails, identify and fix the issue, then rerun until the test passes.
+Expected Output:
+A complete and functional Playwright + pytest API test script that verifies the product details from the Fake Store API and logs the response body.
+
+
+self-healing framework by creating a multi-Agents
+
+Prompt3
+
+Create a multi-agent self-healing framework.
+
+Agents:
+
+1. FailureAgent
+   - Capture pytest failures
+
+2. MCPInspectionAgent
+   - Inspect DOM via Playwright MCP
+
+3. LocatorHealingAgent
+   - Find replacement locators
+
+4. ValidationAgent
+   - Verify healed locator
+
+5. ReportingAgent
+   - Generate HTML and JSON reports
+
+Implement using Python classes and dependency injection.
+Automatic runtime healing and adding an explicit retry/application mechanism.
+
+done below for my project: 
+
+Implemented the multi-agent framework in self_healing_framework.py, with focused tests in test_self_healing_framework.py. Registered the healable_locator pytest marker in pytest.ini.
+
+The framework includes:
+
+FailureAgent to capture failed pytest call reports and the marked locator.
+MCPInspectionAgent using an injected MCPInspector adapter.
+LocatorHealingAgent to generate alternatives from inspected DOM data.
+ValidationAgent to accept only unique, visible candidates.
+ReportingAgent to write JSON and HTML reports.
+SelfHealingPytestPlugin to connect failure capture to the pipeline.
+Validation passed: 3 framework tests passed, with no Pylance errors or syntax errors.
+
+To use it, implement an adapter that satisfies MCPInspector.inspect_dom(page, failed_locator) -> DOMSnapshot, then inject it into the agents and register the plugin from conftest.py. Mark tests with @pytest.mark.healable_locator("selector").
+
+Note: The pytest hook runs after the failing test call. This framework validates and reports replacement locators; applying a replacement and rerunning the failed action/test must be handled by the caller.
+
+Prompt4 - Brady_Tech_Interview_Task:
+
+Generate and execute a Playwright test using pytest and Playwright MCP.
+
+Test Scenario:
+
+Open the URL: https://www.epexspot.com/en/market-results?market_area=GB&auction=&delivery_date=2026-10-15&underlying_year=&modality=Continuous&sub_modality=&technology=&data_mode=table&period=&production_period=&product=30
+
+In Playwright and the language of your choice, implement a test which does the following:
+
+1. Visit the website linked in the Glossary below
+2. Scrape the first 4 data columns: Low, High, Last and Weight Avg.
+3. Write these into a CSV file
+Bonus points for coding style. We’re looking for re-usable, robust, clean and well commented
+code with sensible error handling.
+
+Glossary
+Web site*:
+Market Results | EPEX SPOT - https://www.epexspot.com/en/market-results?market_area=GB&auction=&delivery_date=2026-10-15&underlying_year=&modality=Continuous&sub_modality=&technology=&data_mode=table&period=&production_period=&product=30
+*NOTE: If clicking this link provides an error or no data, adjust the URL parameters to reflect
+yesterday’s date. For example:
+delivery_date=2025-12-02
+Where yesterday’s date is the 2nd December 2025 written in ISO format.
+
+Implementation Requirements:
+
+Apply the Page Object Model (POM) design pattern for page structure and element management.
+Save all page object files inside the project's tests/aitesting/Brady_Tech_Interview_Task/ directory.
+Follow the pytest-style convention (fucntions starting with test_).
+Execute each step interactively using Playwright MCP tools to validate flow and elements.
+Once all steps are validated successfully, generate and save the final test script as tests/aitesting/Brady_Tech_Interview_Task/test_verify_data.py
+create a test data file and save as tests/aitesting/Brady_Tech_Interview_Task/data_set.xlsx
+automatically execute the saved test in headed mode (browser visible).
+If any step or assertion fails, analyze, fix, and rerun the test until it passes successfully.
+
+
+Prompt5: 
+
+Generate and execute a Playwright test using pytest and Playwright MCP.
+
+Test Scenario:
+
+Open the URL: http://localhost/opencart/upload/
+Click on the 'Log in' link in the top navigation bar.
+Enter nandanai@gmail.com in the E-Mail Address field.
+Enter test@123 in the Password field.
+Click on the 'Login' button.
+Verify that the 'Log out' link is visible.
+Verify that the text 'My Account' appears at the right corner of the page.
+Click on the 'Log out' link under My Account link at Top of the page.
+Verify that the 'Account Logout' message is displayed after logging out.
+
+Implementation Requirements:
+
+Apply the Page Object Model (POM) design pattern for page structure and element management.
+Save all page object files inside the project's tests/directory (create a seperate login_page.py for login page elements and action methods)
+Follow the pytest-style convention (fucntions starting with test_).
+Execute each step interactively using Playwright MCP tools to validate flow and elements.
+Once all steps are validated successfully, generate and save the final test script as tests/test_verify_login.py or give any appropriate test_ 'name'
+automatically execute the saved test in headed mode (browser visible).
+If any step or assertion fails, analyze, fix, and rerun the test until it passes successfully.
+Do not delete, override, or modify existing functionality unless absolutely necessary. 
+Reuse the existing Page Object files wherever possible. but ensure that all existing code remains intact and fully functional. Extend the implementation rather than replacing it.
+
+Prompt6: 
+
+Generate and execute a Playwright test using pytest and Playwright MCP.
+
+Test Scenario:
+
+Open the URL: http://localhost/opencart/upload/
+Test Case: Product Search Functionality
+
+===========================================
+Test Steps
+===========================================
+
+1. Open the application in the browser.
+2. Locate the search box on the Home page.
+3. Enter a valid product name (for example, "iPhone") in the search box.
+4. Click on the "Search" button.
+5. Verify that the Search Results page is displayed.
+6. Check if the searched product name appears in the list of search results.
+
+Expected Result:
+----------------
+The Search Results page should appear, and the searched product should be
+visible in the search results list.
+
+Implementation Requirements:
+
+Apply the Page Object Model (POM) design pattern for page structure and element management.
+Save all page object files inside the project's tests/pages/ directory
+Follow the pytest-style convention (fucntions starting with test_).
+Execute each step interactively using Playwright MCP tools to validate flow and elements.
+Once all steps are validated successfully, generate and save the final test script as tests/ (use test_'appropriate name)
+automatically execute the saved test in headed mode (browser visible).
+If any step or assertion fails, analyze, fix, and rerun the test until it passes successfully.
+Do not delete, override, or modify existing functionality unless absolutely necessary. 
+Reuse the existing Page Object files wherever possible. but ensure that all existing code remains intact and fully functional. Extend the implementation rather than replacing it.
+Maintain elements and corresponding action methods in the page object classes seperately and tests should include only invoking the page object classes methods and validations.
+if any code that can be re-used across the project, please keep all the common resuable functions in seperate utility/helper files rather than duplicating code in the test cases.
+Always, maintain robust coding standards, and always implement exception handling to handle the unknown errors or possible errors or any forseen errors  

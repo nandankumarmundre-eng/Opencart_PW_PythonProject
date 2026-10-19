@@ -1,0 +1,139 @@
+# Playwright-Python Framework:
+# Q. How do we prioritize test cases for automation?
+
+# Prioritizing test cases for automation is a critical step in the process of developing a testing framework. Here are the steps to effectively prioritize them:
+# Identify the Test Cases: Begin by listing all the potential test cases that you might want to automate. 
+# This involves understanding the application's functionalities and the specific test scenarios associated with them.
+# Assess the Importance: Evaluate each test case based on factors like business impact, frequency of use, 
+# and complexity. Critical functions should take precedence. For instance, test cases that cover major user journeys or critical features should be prioritized.
+# Consider Reusability: Choose test cases that are reusable across different versions or builds of the application. 
+# This ensures that the effort put into automation yields long-term benefits.
+# Evaluate Execution Time: Test cases that take a long time to execute manually might be better candidates for automation, as it would save time in the long run.
+# Look for Stability: Select test cases associated with stable features of the application, 
+# as changes in frequently updated features can lead to constant maintenance in automated tests.
+# Group Test Cases: Once you've identified the test cases, group them into categories such as sanity tests, regression tests, and end-to-end tests. 
+# This helps in managing them effectively during execution.
+# Finalize the Selection: After grouping, finalize your selection based on your project goals, resources available, and the timeline for the automation effort.
+# By following these steps, you can effectively prioritize test cases for automation, 
+# ensuring that you focus on the most impactful areas first while building a comprehensive automation suite.
+# Was this content relevant to you?
+
+#Q. what is framework?
+# A framework, in the context of software testing and automation, is a structured environment that provides guidelines, 
+# best practices, and tools to streamline the process of automating test cases. Here are some important aspects of a framework:
+# Organization: A framework helps organize various components needed for automation, such as test cases, page object classes, 
+# utility files, and test data files. This organization ensures maintainability and collaboration across different components of the test suite.
+# Reusability: It promotes the creation of reusable components, which can include functions or 
+# classes that can be used across different test cases, thus reducing redundancy and effort in writing new tests.
+# Maintainability: By structuring the files and components properly, a framework allows for easier updates and modifications over time, 
+# which is crucial as the application evolves.
+# Collaboration: A well-defined framework permits collaboration among team members by having a clear structure for where to place and 
+# how to communicate between different files and components.
+# Types of Frameworks: There are various types of frameworks, such as keyword-driven, modular, 
+# and hybrid frameworks, each suited for different project requirements.
+# Creating a framework is essential as it not only facilitates direct automation of test cases but also ensures that your automation suits long-term projects 
+# and can be easily maintained as the team grows or changes.
+
+install opencart application for framework developing
+
+what is framework?
+"A framework is a predefined structure or set of guidelines used to build and maintain automation tests efficiently. 
+Instead of writing automation scripts from scratch every time, a framework provides reusable components, standards, and utilities that make test development faster, 
+more maintainable, scalable, and reliable."
+
+"A framework is a structured approach for developing and executing automation tests. 
+It provides reusable components, coding standards, reporting, logging, and test management features. 
+The main goal is to improve maintainability, reusability, scalability, and reduce script duplication. 
+In my projects, I've used a Playwright-Python Hybrid Framework with Page Object Model, Pytest, logging, reporting, and CI/CD integration."
+
+Types of Frameworks
+1. Keyword driven 
+2. Hybrid driven (pytest + POM) & Data driven - combination of two or more multiple frameworks
+3. Data driven
+4. Robot framework
+5. Pytest framework
+6. BDD framework
+
+If Manager Asks: Why Do We Need a Framework?
+
+Answer:
+
+Improves code reusability
+Reduces maintenance effort
+Supports scalability
+Standardizes automation practices
+Generates reports and logs
+Easier for team collaboration
+Faster test execution and debugging
+
+One-line answer:
+
+"A framework is a reusable architecture that provides structure, standards, and common utilities to make automation testing faster, scalable, and easier to maintain."
+
+
+why we develop framework ?
+- To organize the test cases
+- POM files
+- utility files - reusasble functions, reading json and excel files..
+- fixtures
+- reports
+- test data
+- config
+- pytest.ini
+- conftest.py
+
+Main purpose of the framework
+1. Re-usability
+2. Maintainability of the files, and colloborating and structured folders
+
+
+fakr - tool to create the test data
+
+Phases
+Framework Design phase - setup includes project, proritize the test cases, and POM files, utility files, fixtures, reports, test data, config, pytest.ini, conftest.py...etc..
+Framework Development  - actual test case development 
+Execution Phase - CI/CD - Test case execution based on grouping, parllel, retries and integrating with the CI/CD
+
+
+1. Create a new Project - while creating a project, it will create a .venv - virtual environment for python project 
+(to create a virtual environment : python -m venv .venv)
+2. Option1: Install required packages - 
+1. Download and install python 3.x and verify python --version
+2. pip install playwright -install playwright
+3. playwright install - to install playwright browsers
+4. pip install pytest - pyton's framweork
+5. pip pytest xdist - parllel execution
+6. pip install pytest-html - pytest html reports
+7. pip install pytest-rerunfailures
+8. pip install openpyxl - to validate excel data
+9. pip install fakr - test data tool to setup test data
+10.pip install python-slugify
+
+pip list - to check what are all the packages already exists in the system
+
+Option 2: Create requirements.txt file under the root directory of the project with all the plugins.
+ex: 
+playwright 
+pytest-xdist 
+pytest-html 
+allure-pytest 
+pytest-rerunfailures 
+openpyxl 
+Faker 
+python-slugify 
+ 
+Once you have this file in your project root, install all dependencies in one go by running the 
+below command from terminal. 
+ 
+pip install -r requirements.txt  
+ 
+Install playwright browsers 
+playwright install
+
+refer the pavan sir's framework setup_guidelines for all the sections
+
+pytest.ini - first it gives priority to CLI and 2nd it gives priority to pytest.ini
+conftest.py - where we include re-usable fixtures and hooks to track test results (functions) 
+and if user is giving a CLI options then it should read that also we need to mention in conftest.py to handle both from CLI for a user or follow the pytest.ini as per framework.
+--refer pytest.ini and conftest.py and config.py files carefully in this project for better understanding.
+

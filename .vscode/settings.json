@@ -1,0 +1,28 @@
+{
+  "python.defaultInterpreterPath": "C:\\Python314\\python.exe",
+  "editor.quickSuggestions": {
+    "other": true,
+    "comments": false,
+    "strings": false
+  },
+  "editor.suggestOnTriggerCharacters": true,
+  "[python]": {
+    "editor.inlineSuggest.enabled": true
+  },
+  "github.copilot.enable": {
+    "*": true
+  },
+  "python.analysis.typeCheckingMode": "basic",
+  "python.analysis.autoImportCompletions": true,
+  "python.analysis.completeFunctionParens": true,
+  "python.testing.enabled": true,
+  "python.testing.pytestEnabled": true,
+  "python.testing.unittestEnabled": false,
+  "python.testing.pytestArgs": [
+    "-q",
+    "."
+  ],
+  "python.testing.cwd": "${workspaceFolder}",
+  "python-envs.defaultEnvManager": "ms-python.python:venv",
+  "chat.editing.autoAcceptDelay": 100
+}

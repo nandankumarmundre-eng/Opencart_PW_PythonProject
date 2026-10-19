@@ -1,0 +1,5 @@
+[OK] Starting browser: chromium
+[OK] Headless mode: False (headed=True)
+[INFO] Navigating to: http://localhost/opencart/upload/
+[TRACE] Tracing enabled - capturing screenshots and actions
+[CLEANUP] Closing browser context and stopping Playwright...
