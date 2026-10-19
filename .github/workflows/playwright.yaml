@@ -23,5 +23,16 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -r requirements.txt
           python -m playwright install --with-deps chromium
+      - name: Check OpenCart URL
+        run: |
+          if [ -z "$OPENCART_STORE_URL" ]; then
+            echo "::error::Set the OPENCART_STORE_URL Actions variable to an OpenCart URL reachable from GitHub-hosted runners."
+            exit 1
+          fi
+          if [[ "$OPENCART_STORE_URL" == *"localhost"* || "$OPENCART_STORE_URL" == *"127.0.0.1"* ]]; then
+            echo "::error::OPENCART_STORE_URL cannot use localhost; GitHub-hosted runners cannot access your local machine."
+            exit 1
+          fi
+          curl --silent --show-error --location --output /dev/null --max-time 30 "$OPENCART_STORE_URL"
       - name: Run your tests
-        run: python -m pytest
+        run: python -m pytest --base-url "$OPENCART_STORE_URL"
