@@ -22,3 +22,5 @@ PyYAML
 
 #Once you have this file in your project root, install all dependencies in one go:
 # pip install -r requirements.txt
+
+Always remember if you know the exact latest version then only you put the version else do not mention it then it will install automatically the latest version.
