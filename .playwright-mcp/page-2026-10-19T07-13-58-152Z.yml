@@ -1,0 +1,112 @@
+- generic [active] [ref=f3e1]:
+  - link "Skip to content":
+    - /url: "#skip2content"
+  - banner [ref=f3e2]:
+    - generic [ref=f3e4]:
+      - link "Jenkins" [ref=f3e5] [cursor=pointer]:
+        - /url: /
+      - generic "breadcrumb" [ref=f3e8]:
+        - list [ref=f3e9]:
+          - listitem [ref=f3e10]:
+            - text: /
+            - generic [ref=f3e11]: playwright-python-local
+    - generic [ref=f3e12]:
+      - button "Search" [ref=f3e13] [cursor=pointer]
+      - link "Manage Jenkins" [ref=f3e18] [cursor=pointer]:
+        - /url: /manage
+      - link "Nandan Kumar Mundre" [ref=f3e24] [cursor=pointer]:
+        - /url: /user/admin
+  - generic [ref=f3e29]:
+    - generic [ref=f3e30]:
+      - generic [ref=f3e31]:
+        - link [ref=f3e34]:
+          - /url: /job/playwright-python-local/
+        - link [ref=f3e41] [cursor=pointer]:
+          - /url: /job/playwright-python-local/changes
+        - link [ref=f3e47] [cursor=pointer]:
+          - /url: /job/playwright-python-local/ws/
+        - link [ref=f3e53] [cursor=pointer]:
+          - /url: /job/playwright-python-local/build?delay=0sec
+        - link "Delete Project" [ref=f3e59] [cursor=pointer]:
+          - /url: "#"
+        - link [ref=f3e67] [cursor=pointer]:
+          - /url: /job/playwright-python-local/configure
+        - link [ref=f3e75] [cursor=pointer]:
+          - /url: /job/playwright-python-local/confirm-rename
+      - generic [ref=f3e82]:
+        - generic [ref=f3e83]:
+          - link "Builds" [ref=f3e84] [cursor=pointer]:
+            - /url: /job/playwright-python-local/buildTimeTrend
+          - button "More actions" [ref=f3e88] [cursor=pointer]
+        - generic [ref=f3e93]:
+          - searchbox "Filter" [ref=f3e96]
+          - generic [ref=f3e103]:
+            - generic [ref=f3e104]: Today
+            - generic [ref=f3e105] [cursor=pointer]:
+              - link "Failed" [ref=f3e106]:
+                - /url: /job/playwright-python-local/4/console
+              - link "#4 12:32 PM" [ref=f3e113]:
+                - /url: /job/playwright-python-local/4/
+                - text: "#4"
+                - generic "Took 1.7 sec" [ref=f3e115]: 12:32 PM
+              - button [ref=f3e116]
+            - generic [ref=f3e119] [cursor=pointer]:
+              - link "Failed" [ref=f3e120]:
+                - /url: /job/playwright-python-local/3/console
+              - link "#3 12:24 PM" [ref=f3e127]:
+                - /url: /job/playwright-python-local/3/
+                - text: "#3"
+                - generic "Took 0.17 sec" [ref=f3e129]: 12:24 PM
+              - button [ref=f3e130]
+            - generic [ref=f3e133] [cursor=pointer]:
+              - link "Failed" [ref=f3e134]:
+                - /url: /job/playwright-python-local/2/console
+              - link "#2 12:09 PM" [ref=f3e141]:
+                - /url: /job/playwright-python-local/2/
+                - text: "#2"
+                - generic "Took 4 sec" [ref=f3e143]: 12:09 PM
+              - button [ref=f3e144]
+            - generic [ref=f3e147] [cursor=pointer]:
+              - link "Failed" [ref=f3e148]:
+                - /url: /job/playwright-python-local/1/console
+              - link "#1 12:06 PM" [ref=f3e155]:
+                - /url: /job/playwright-python-local/1/
+                - text: "#1"
+                - generic "Took 58 sec" [ref=f3e157]: 12:06 PM
+              - button [ref=f3e158]
+    - generic [ref=f3e161]:
+      - generic [ref=f3e162]:
+        - generic [ref=f3e163]:
+          - link [ref=f3e164] [cursor=pointer]:
+            - /url: /job/playwright-python-local/4/
+          - heading "playwright-python-local" [level=1] [ref=f3e170]
+        - link "Add description" [ref=f3e172] [cursor=pointer]:
+          - /url: editDescription
+      - table
+      - heading "Permalinks" [level=2] [ref=f3e178]
+      - list [ref=f3e179]:
+        - listitem [ref=f3e180]:
+          - link [ref=f3e181] [cursor=pointer]:
+            - /url: lastBuild/
+            - text: Last build (#4), 11 min ago
+            - button [ref=f3e182]
+        - listitem [ref=f3e183]:
+          - link [ref=f3e184] [cursor=pointer]:
+            - /url: lastFailedBuild/
+            - text: Last failed build (#4), 11 min ago
+            - button [ref=f3e185]
+        - listitem [ref=f3e186]:
+          - link [ref=f3e187] [cursor=pointer]:
+            - /url: lastUnsuccessfulBuild/
+            - text: Last unsuccessful build (#4), 11 min ago
+            - button [ref=f3e188]
+        - listitem [ref=f3e189]:
+          - link [ref=f3e190] [cursor=pointer]:
+            - /url: lastCompletedBuild/
+            - text: Last completed build (#4), 11 min ago
+            - button [ref=f3e191]
+  - contentinfo [ref=f3e192]:
+    - generic [ref=f3e195]:
+      - link "REST API" [ref=f3e196] [cursor=pointer]:
+        - /url: api/
+      - button "Jenkins 2.580.1" [ref=f3e197] [cursor=pointer]

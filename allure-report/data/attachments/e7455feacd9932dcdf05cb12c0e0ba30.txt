@@ -1,0 +1,7 @@
+[OK] Starting browser: chromium
+[OK] Headless mode: True (headed=False)
+[INFO] Navigating to: http://localhost/opencart/upload/
+[TRACE] Tracing enabled - capturing screenshots and actions
+[RESULT] Test 'test_login_with_valid_credentails' result: [PASS]
+[SAVE] Trace saved: reports/traces/test_login_with_valid_credentails_trace.zip
+[CLEANUP] Closing browser context and stopping Playwright...

@@ -10,6 +10,7 @@ from pages.my_account_page import MyAccountPage
 
 @pytest.mark.end_to_end
 @pytest.mark.regression
+@pytest.mark.sanity
 def test_login_with_valid_credentails(page):
     assert Config.email and Config.password, "Login credentials are missing from config.Config"
     page.goto(Config.store_url)

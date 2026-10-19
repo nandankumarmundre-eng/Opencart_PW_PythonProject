@@ -1,0 +1,344 @@
+- generic [active] [ref=f4e1]:
+  - link "Skip to content":
+    - /url: "#skip2content"
+  - banner [ref=f4e2]:
+    - generic [ref=f4e4]:
+      - link "Jenkins" [ref=f4e5] [cursor=pointer]:
+        - /url: /
+      - generic "breadcrumb" [ref=f4e8]:
+        - list [ref=f4e9]:
+          - listitem [ref=f4e10]:
+            - text: /
+            - link "playwright-python-local" [ref=f4e11] [cursor=pointer]:
+              - /url: /job/playwright-python-local/
+            - generic "dropdown menu for playwright-python-local" [ref=f4e12] [cursor=pointer]
+          - listitem [ref=f4e15]:
+            - text: /
+            - generic [ref=f4e16]: Configure
+    - generic [ref=f4e17]:
+      - button "Search" [ref=f4e18] [cursor=pointer]
+      - link "Manage Jenkins" [ref=f4e23] [cursor=pointer]:
+        - /url: /manage
+      - link "Nandan Kumar Mundre" [ref=f4e29] [cursor=pointer]:
+        - /url: /user/admin
+  - generic [ref=f4e34]:
+    - generic [ref=f4e35]:
+      - heading "Configure" [level=1] [ref=f4e38]
+      - generic [ref=f4e39]:
+        - button [ref=f4e42]
+        - button [ref=f4e48] [cursor=pointer]
+        - button [ref=f4e57] [cursor=pointer]
+        - button [ref=f4e64] [cursor=pointer]
+        - button [ref=f4e73] [cursor=pointer]
+        - button [ref=f4e85] [cursor=pointer]
+    - generic [ref=f4e101]:
+      - generic [ref=f4e102]:
+        - heading "General" [level=2] [ref=f4e104]
+        - generic "Enable or disable the current project" [ref=f4e106]:
+          - checkbox "Disabled Enabled" [checked] [ref=f4e107]
+          - generic [ref=f4e108] [cursor=pointer]:
+            - generic [ref=f4e109]: Disabled
+            - generic [ref=f4e110]: Enabled
+      - generic [ref=f4e112]:
+        - generic [ref=f4e113]: Description
+        - generic [ref=f4e114]:
+          - textbox [ref=f4e115]
+          - generic [ref=f4e116]:
+            - text: Plain text
+            - link "Preview" [ref=f4e117] [cursor=pointer]:
+              - /url: "#"
+      - generic [ref=f4e118]:
+        - generic [ref=f4e121]:
+          - generic [ref=f4e122]:
+            - checkbox [ref=f4e123]
+            - generic [ref=f4e124] [cursor=pointer]: Discard old builds
+          - 'link "Help for feature: Discard old builds" [ref=f4e125] [cursor=pointer]':
+            - /url: "#"
+            - generic [ref=f4e126]: "?"
+        - generic [ref=f4e130]:
+          - checkbox [ref=f4e131]
+          - generic [ref=f4e132] [cursor=pointer]: GitHub project
+        - generic [ref=f4e133]:
+          - generic [ref=f4e135]:
+            - generic [ref=f4e136]:
+              - checkbox [checked] [ref=f4e137]
+              - generic [ref=f4e138] [cursor=pointer]: This project is parameterized
+            - 'link "Help for feature: This project is parameterized" [ref=f4e139] [cursor=pointer]':
+              - /url: "#"
+              - generic [ref=f4e140]: "?"
+          - generic [ref=f4e144]:
+            - generic [ref=f4e145]:
+              - generic [ref=f4e146]:
+                - text: Choice Parameter
+                - link "Help" [ref=f4e148] [cursor=pointer]:
+                  - /url: "#"
+                  - generic [ref=f4e149]: "?"
+                - button "Delete" [ref=f4e150] [cursor=pointer]
+              - generic [ref=f4e154]:
+                - generic [ref=f4e155]:
+                  - generic [ref=f4e156]:
+                    - text: Name
+                    - 'link "Help for feature: Name" [ref=f4e157] [cursor=pointer]':
+                      - /url: "#"
+                      - generic [ref=f4e158]: "?"
+                  - textbox [ref=f4e160]: browser
+                - generic [ref=f4e161]:
+                  - generic [ref=f4e162]:
+                    - text: Choices
+                    - 'link "Help for feature: Choices" [ref=f4e163] [cursor=pointer]':
+                      - /url: "#"
+                      - generic [ref=f4e164]: "?"
+                  - textbox [ref=f4e166]: chromium firefox webkit
+                - generic [ref=f4e167]:
+                  - generic [ref=f4e168]:
+                    - text: Description
+                    - 'link "Help for feature: Description" [ref=f4e169] [cursor=pointer]':
+                      - /url: "#"
+                      - generic [ref=f4e170]: "?"
+                  - generic [ref=f4e171]:
+                    - textbox [ref=f4e172]
+                    - generic [ref=f4e173]:
+                      - text: Plain text
+                      - link "Preview" [ref=f4e174] [cursor=pointer]:
+                        - /url: "#"
+            - generic [ref=f4e175]:
+              - generic [ref=f4e176]:
+                - text: Choice Parameter
+                - link "Help" [ref=f4e178] [cursor=pointer]:
+                  - /url: "#"
+                  - generic [ref=f4e179]: "?"
+                - button "Delete" [ref=f4e180] [cursor=pointer]
+              - generic [ref=f4e184]:
+                - generic [ref=f4e185]:
+                  - generic [ref=f4e186]:
+                    - text: Name
+                    - 'link "Help for feature: Name" [ref=f4e187] [cursor=pointer]':
+                      - /url: "#"
+                      - generic [ref=f4e188]: "?"
+                  - textbox [ref=f4e190]: testgroups
+                - generic [ref=f4e191]:
+                  - generic [ref=f4e192]:
+                    - text: Choices
+                    - 'link "Help for feature: Choices" [ref=f4e193] [cursor=pointer]':
+                      - /url: "#"
+                      - generic [ref=f4e194]: "?"
+                  - textbox [ref=f4e196]: sanity regression sanity or regression sanity and regression datadriven end_to_end
+                - generic [ref=f4e197]:
+                  - generic [ref=f4e198]:
+                    - text: Description
+                    - 'link "Help for feature: Description" [ref=f4e199] [cursor=pointer]':
+                      - /url: "#"
+                      - generic [ref=f4e200]: "?"
+                  - generic [ref=f4e201]:
+                    - textbox [ref=f4e202]
+                    - generic [ref=f4e203]:
+                      - text: Plain text
+                      - link "Preview" [ref=f4e204] [cursor=pointer]:
+                        - /url: "#"
+            - button "Add Parameter" [ref=f4e206] [cursor=pointer]
+        - generic [ref=f4e211]:
+          - generic [ref=f4e212]:
+            - checkbox [ref=f4e213]
+            - generic [ref=f4e214] [cursor=pointer]: Throttle builds
+          - 'link "Help for feature: Throttle builds" [ref=f4e215] [cursor=pointer]':
+            - /url: "#"
+            - generic [ref=f4e216]: "?"
+      - generic [ref=f4e219]:
+        - generic [ref=f4e220]:
+          - checkbox [ref=f4e221]
+          - generic [ref=f4e222] [cursor=pointer]: Execute concurrent builds if necessary
+        - 'link "Help for feature: Execute concurrent builds if necessary" [ref=f4e223] [cursor=pointer]':
+          - /url: "#"
+          - generic [ref=f4e224]: "?"
+      - generic [ref=f4e226]:
+        - button "Advanced" [ref=f4e227] [cursor=pointer]
+        - generic "One or more fields in this block have been edited." [ref=f4e230]: Edited
+      - generic [ref=f4e235]:
+        - generic [ref=f4e236]: Source Code Management
+        - generic [ref=f4e237]: Connect and manage your code repository to automatically pull the latest code for your builds.
+        - generic [ref=f4e241]:
+          - radio "None" [checked] [ref=f4e242]
+          - generic [ref=f4e243]: None
+        - generic [ref=f4e244]:
+          - generic [ref=f4e246]:
+            - generic [ref=f4e247]:
+              - radio "Git" [ref=f4e248]
+              - generic [ref=f4e249] [cursor=pointer]: Git
+            - 'link "Help for feature: Git" [ref=f4e250] [cursor=pointer]':
+              - /url: "#"
+              - generic [ref=f4e251]: "?"
+          - option "- none -" [selected]
+          - option "(Auto)" [selected]
+          - option "AssemblaWeb"
+          - option "FishEye"
+          - option "Kiln"
+          - option "Microsoft Team Foundation Server/Visual Studio Team Services"
+          - option "bitbucketserver"
+          - option "bitbucketweb"
+          - option "cgit"
+          - option "gitblit"
+          - option "githubweb"
+          - option "gitiles"
+          - option "gitlab"
+          - option "gitlist"
+          - option "gitoriousweb"
+          - option "gitweb"
+          - option "gogs"
+          - option "phabricator"
+          - option "redmineweb"
+          - option "rhodecode"
+          - option "stash"
+          - option "viewgit"
+      - generic [ref=f4e252]:
+        - generic [ref=f4e253]: Triggers
+        - generic [ref=f4e254]: Set up automated actions that start your build based on specific events, like code changes or scheduled times.
+        - generic [ref=f4e257]:
+          - generic [ref=f4e258]:
+            - checkbox [ref=f4e259]
+            - generic [ref=f4e260] [cursor=pointer]: Trigger builds remotely (e.g., from scripts)
+          - 'link "Help for feature: Trigger builds remotely (e.g., from scripts)" [ref=f4e261] [cursor=pointer]':
+            - /url: "#"
+            - generic [ref=f4e262]: "?"
+        - generic [ref=f4e265]:
+          - generic [ref=f4e266]:
+            - checkbox [ref=f4e267]
+            - generic [ref=f4e268] [cursor=pointer]: Build after other projects are built
+          - 'link "Help for feature: Build after other projects are built" [ref=f4e269] [cursor=pointer]':
+            - /url: "#"
+            - generic [ref=f4e270]: "?"
+        - generic [ref=f4e273]:
+          - generic [ref=f4e274]:
+            - checkbox [ref=f4e275]
+            - generic [ref=f4e276] [cursor=pointer]: Build periodically
+          - 'link "Help for feature: Build periodically" [ref=f4e277] [cursor=pointer]':
+            - /url: "#"
+            - generic [ref=f4e278]: "?"
+        - generic [ref=f4e281]:
+          - generic [ref=f4e282]:
+            - checkbox [ref=f4e283]
+            - generic [ref=f4e284] [cursor=pointer]: GitHub hook trigger for GITScm polling
+          - 'link "Help for feature: GitHub hook trigger for GITScm polling" [ref=f4e285] [cursor=pointer]':
+            - /url: "#"
+            - generic [ref=f4e286]: "?"
+        - generic [ref=f4e289]:
+          - generic [ref=f4e290]:
+            - checkbox [ref=f4e291]
+            - generic [ref=f4e292] [cursor=pointer]: Poll SCM
+          - 'link "Help for feature: Poll SCM" [ref=f4e293] [cursor=pointer]':
+            - /url: "#"
+            - generic [ref=f4e294]: "?"
+      - generic [ref=f4e295]:
+        - generic [ref=f4e296]: Environment
+        - generic [ref=f4e297]: Configure settings and variables that define the context in which your build runs, like credentials, paths, and global parameters.
+        - generic [ref=f4e301]:
+          - checkbox [ref=f4e302]
+          - generic [ref=f4e303] [cursor=pointer]: Delete workspace before build starts
+        - generic [ref=f4e306]:
+          - generic [ref=f4e307]:
+            - checkbox [ref=f4e308]
+            - generic [ref=f4e309] [cursor=pointer]: Use secret text(s) or file(s)
+          - 'link "Help for feature: Use secret text(s) or file(s)" [ref=f4e310] [cursor=pointer]':
+            - /url: "#"
+            - generic [ref=f4e311]: "?"
+        - generic [ref=f4e315]:
+          - checkbox [ref=f4e316]
+          - generic [ref=f4e317] [cursor=pointer]: Add timestamps to the Console Output
+        - generic [ref=f4e321]:
+          - checkbox [ref=f4e322]
+          - generic [ref=f4e323] [cursor=pointer]: Inspect build log for published build scans
+        - generic [ref=f4e327]:
+          - checkbox [ref=f4e328]
+          - generic [ref=f4e329] [cursor=pointer]: Terminate a build if it's stuck
+        - generic [ref=f4e332]:
+          - generic [ref=f4e333]:
+            - checkbox [ref=f4e334]
+            - generic [ref=f4e335] [cursor=pointer]: With Ant
+          - 'link "Help for feature: With Ant" [ref=f4e336] [cursor=pointer]':
+            - /url: "#"
+            - generic [ref=f4e337]: "?"
+      - generic [ref=f4e338]:
+        - generic [ref=f4e339]: Build Steps
+        - generic [ref=f4e340]: Automate your build process with ordered tasks like code compilation, testing, and deployment.
+        - generic [ref=f4e341]:
+          - generic [ref=f4e342]:
+            - generic [ref=f4e343]:
+              - text: Execute Windows batch command
+              - link "Help" [ref=f4e345] [cursor=pointer]:
+                - /url: "#"
+                - generic [ref=f4e346]: "?"
+              - button "Delete" [ref=f4e347] [cursor=pointer]
+            - generic [ref=f4e351]:
+              - generic [ref=f4e352]:
+                - generic [ref=f4e353]: Command
+                - generic [ref=f4e354]:
+                  - text: See
+                  - link "the list of available environment variables" [ref=f4e355] [cursor=pointer]:
+                    - /url: /env-vars.html
+                - textbox [ref=f4e357]: "@echo off cd /d \"%WORKSPACE%\" if exist \"reports\\allure-results\" rmdir /s /q \"reports\\allure-results\" if not exist \".venv\\Scripts\\python.exe\" ( echo ERROR: Python virtual environment not found at %WORKSPACE%\\.venv\\Scripts\\python.exe exit /b 1 ) \".venv\\Scripts\\python.exe\" -m pytest tests --browser \"%browser%\" -m \"%testgroups%\" --headless set \"TEST_EXIT_CODE=%ERRORLEVEL%\" exit /b %TEST_EXIT_CODE%"
+              - button "Advanced" [ref=f4e360] [cursor=pointer]
+          - button "Add build step" [ref=f4e364] [cursor=pointer]
+      - generic [ref=f4e367]:
+        - generic [ref=f4e368]: Post-build Actions
+        - generic [ref=f4e369]: Define what happens after a build completes, like sending notifications, archiving artifacts, or triggering other jobs.
+        - generic [ref=f4e370]:
+          - generic [ref=f4e371]:
+            - generic [ref=f4e372]:
+              - text: Allure Report
+              - button "Delete" [ref=f4e374] [cursor=pointer]
+            - generic [ref=f4e378]:
+              - generic [ref=f4e381]:
+                - checkbox [ref=f4e382]
+                - generic [ref=f4e383] [cursor=pointer]: Disabled
+              - generic [ref=f4e385]:
+                - generic [ref=f4e386]: "Results:"
+                - generic [ref=f4e387]:
+                  - text: Paths to Allure results directories relative from workspace.E.g.
+                  - strong [ref=f4e388]: target/allure-results
+                  - text: .
+                - generic [ref=f4e390]:
+                  - generic [ref=f4e393]:
+                    - generic [ref=f4e394]:
+                      - generic [ref=f4e395]: Path
+                      - textbox [ref=f4e397]: reports/allure-results
+                    - table
+                  - button "Add" [ref=f4e398] [cursor=pointer]
+              - generic [ref=f4e401]:
+                - generic [ref=f4e402]: Properties
+                - button "Add" [ref=f4e405] [cursor=pointer]
+              - generic [ref=f4e408]:
+                - generic [ref=f4e409]: Allure installation
+                - generic [ref=f4e410]: Select an Allure installation. Its installed version determines whether the Java-based Allure 2 or Node.js-based Allure 3 workflow is used. If only one installation is configured, it is used automatically.
+                - combobox [ref=f4e412]:
+                  - option "myAllure" [selected]
+              - button "Advanced" [ref=f4e415] [cursor=pointer]
+          - generic [ref=f4e418]:
+            - generic [ref=f4e419]:
+              - text: E-mail Notification
+              - link "Help" [ref=f4e421] [cursor=pointer]:
+                - /url: "#"
+                - generic [ref=f4e422]: "?"
+              - button "Delete" [ref=f4e423] [cursor=pointer]
+            - generic [ref=f4e427]:
+              - generic [ref=f4e428]:
+                - generic [ref=f4e429]: Recipients
+                - generic [ref=f4e430]: Whitespace-separated list of recipient addresses. May reference build parameters like $PARAM. E-mail will be sent when a build fails, becomes unstable or returns to stable.
+                - textbox [ref=f4e432]
+              - generic [ref=f4e435]:
+                - checkbox [ref=f4e436]
+                - generic [ref=f4e437] [cursor=pointer]: Send e-mail for every unstable build
+              - generic [ref=f4e438]:
+                - link "Help for feature:" [ref=f4e440] [cursor=pointer]:
+                  - /url: "#"
+                  - generic [ref=f4e441]: "?"
+                - generic [ref=f4e443]:
+                  - checkbox [ref=f4e444]
+                  - generic [ref=f4e445] [cursor=pointer]: Send separate e-mails to individuals who broke the build
+          - button "Add post-build action" [ref=f4e447] [cursor=pointer]
+      - generic [ref=f4e452]:
+        - button "Save" [ref=f4e453] [cursor=pointer]
+        - button "Apply" [ref=f4e454] [cursor=pointer]
+  - contentinfo [ref=f4e455]:
+    - generic [ref=f4e458]:
+      - link "REST API" [ref=f4e459] [cursor=pointer]:
+        - /url: api/
+      - button "Jenkins 2.580.1" [ref=f4e460] [cursor=pointer]

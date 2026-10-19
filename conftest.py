@@ -23,7 +23,8 @@ def pytest_addoption(parser):
     You can override these when running pytest or store defaults in pytest.ini.
     """
     parser.addoption("--browser", default="chromium", help="Browser: chromium, firefox, webkit")
-    parser.addoption("--headed", action="store_true", help="Run in headed (visible) mode")
+    parser.addoption("--headed", action="store_true", default=False, help="Run in headed (visible) mode")
+    parser.addoption("--headless", dest="headed", action="store_false", help="Run in headless mode")
     parser.addoption("--base-url", default="https://tutorialsninja.com/demo/", help="Base URL for tests")
     parser.addoption("--video", default="retain-on-failure", help="Record video: on, off, retain-on-failure")
     parser.addoption("--screenshot", default="only-on-failure", help="Take screenshot: on, off, only-on-failure")

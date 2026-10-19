@@ -1,0 +1,2 @@
+[     417ms] [WARNING] Couldn't find the expected validation element (.validation-error-area) for element JSHandle@node @ http://localhost:8080/static/cf378eb8/scripts/hudson-behavior.js:716
+[     418ms] [WARNING] Couldn't find the expected status element @ http://localhost:8080/adjuncts/cf378eb8/lib/form/select/select.js:35
