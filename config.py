@@ -22,6 +22,18 @@ for _key in ("email", "password"):
 class Config:
     store_url = os.getenv("OPENCART_STORE_URL") or "http://localhost/opencart/upload/"
     practice_url = os.getenv("PLAYWRIGHT_BASE_URL") or "https://testautomationpractice.blogspot.com/"
+    market_symbols = os.getenv(
+        "MARKET_SYMBOLS",
+        "NSE:NIFTY,DELTAIN:BTCUSD.P,MCX:NATURALGASM2026,MCX:CRUDEOILX2026",
+    )
+    market_report_email = os.getenv(
+        "MARKET_REPORT_EMAIL",
+        "nandankumarmundre@gmail.com",
+    )
+    market_smtp_host = os.getenv("MARKET_SMTP_HOST", "smtp.gmail.com")
+    market_smtp_port = int(os.getenv("MARKET_SMTP_PORT", "587"))
+    market_smtp_username = os.getenv("MARKET_SMTP_USERNAME", "")
+    market_smtp_password = os.getenv("MARKET_SMTP_PASSWORD", "")
     email = os.getenv("OPENCART_EMAIL", "")
     password = os.getenv("OPENCART_PASSWORD", "")
     invalid_email = "pavanol123@abc.com"

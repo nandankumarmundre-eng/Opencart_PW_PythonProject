@@ -234,3 +234,35 @@ Reuse the existing Page Object files wherever possible. but ensure that all exis
 Maintain elements and corresponding action methods in the page object classes seperately and tests should include only invoking the page object classes methods and validations.
 if any code that can be re-used across the project, please keep all the common resuable functions in seperate utility/helper files rather than duplicating code in the test cases.
 Always, maintain robust coding standards, and always implement exception handling to handle the unknown errors or possible errors or any forseen errors  
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Stock Trading Prompt:
+
+Analyze the volume analysis using volume Profile (SVP HD) that is already set on the tradingview chart and analze the trend analysis using Donchain Channels (DC) that is also already set on the chart and also
+Perfom fundamental analysis by reading the current news about the symbol online world wide or events.
+Perform the Technical analysis of the symbol and dectect Trends include sideways, uptrend and downtrend and momentum and volatility using playwright and python and pytest and provide an accurate buy, sell, or no trading based on the alignment of uptrend, downtrend and sideways market along with momentum and volatility.
+
+Tradingview Url: https://in.tradingview.com/chart/hBnJZNMN/?symbol=MCX%3ANATURALGASM2026
+Symbol: Naturalgas Oct 2026
+Exchange: MCX
+Timeframe : 15 Minutes
+
+Scenario
+1. Launch the given url: https://in.tradingview.com/chart/hBnJZNMN/?symbol=MCX%3ANATURALGASM2026
+2. Analyze the Volume Profile (SVP HD) and Donchain Channel (DC) indicator
+3. Perfom fundamental analysis by reading the current news about the symbol online world wide or events.
+3. Perform Technical analysis by understanding the volume analysis, and trend analysis using the DC and SVP HD.
+4. Remember one strong technical point whenever volumes are too low at bottom then that is signaling buying at low level.
+5. Remember one strong technical point whenever volumes are too low at top of the volume profile box that is signaling selling at high level. 
+6. Includes all the above and peform the strong analysis and provide your suggestion and that should be accurate and provide your actions - buy or sell or sideways.
+
+Implementation:
+1. pytest always use (test_) for module names and test cases.
+2. create a seperate page object classes and keep it under pages\ directory (give any appropriate name)
+3. create a module name as test_trading and keep it under tests\ directory
+4. Do not modify or override existing code, extend the implementation, but not replacing the existing code base.
+5. As soon as I run the code it should perform all the above analysis and just simply tell me the action: buy or sell or sideways
+6. prepare it as a robust as it should work for any given symbol (ex: ?symbol=NSE%3ANIFTY, ?symbol=DELTAIN%3ABTCUSD.P, ?symbol=MCX%3ANATURALGASM2026, ?symbol=MCX%3ACRUDEOILX2026)
+
+
+

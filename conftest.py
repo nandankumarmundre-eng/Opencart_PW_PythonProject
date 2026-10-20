@@ -1,8 +1,13 @@
 import pytest
 import allure
 from pathlib import Path
+from smtplib import SMTPException
 from config import Config
 from playwright.sync_api import Dialog, Error as PlaywrightError, Page, sync_playwright
+from utilities.email_report import send_email_report
+
+
+MARKET_SUMMARY_LINES_KEY = pytest.StashKey[list[str]]()
 
 # ========================================================================
 # PYTEST + PLAYWRIGHT TEST CONFIGURATION FILE
@@ -27,9 +32,63 @@ def pytest_addoption(parser):
     parser.addoption("--headed", action="store_true", default=False, help="Run in headed (visible) mode")
     parser.addoption("--headless", dest="headed", action="store_false", help="Run in headless mode")
     parser.addoption("--base-url", default=Config.practice_url, help="Base URL for tests")
+    parser.addoption(
+        "--market-symbols",
+        default=Config.market_symbols,
+        help="Comma-separated market symbols to analyze",
+    )
     parser.addoption("--video", default="retain-on-failure", help="Record video: on, off, retain-on-failure")
     parser.addoption("--screenshot", default="only-on-failure", help="Take screenshot: on, off, only-on-failure")
     parser.addoption("--tracing", default="retain-on-failure", help="Tracing: on, off, retain-on-failure")
+
+
+def pytest_generate_tests(metafunc):
+    if "market_symbol" not in metafunc.fixturenames:
+        return
+
+    symbols = [
+        symbol.strip()
+        for symbol in metafunc.config.getoption("market_symbols").split(",")
+        if symbol.strip()
+    ]
+    if not symbols:
+        raise pytest.UsageError("Configure symbols with MARKET_SYMBOLS or --market-symbols.")
+    metafunc.parametrize("market_symbol", symbols, ids=symbols)
+
+
+def pytest_terminal_summary(terminalreporter, config):
+    summary_lines = config.stash.get(MARKET_SUMMARY_LINES_KEY, [])
+    if not summary_lines:
+        return
+
+    terminalreporter.write_sep("=", "Market summary")
+    for line in summary_lines:
+        terminalreporter.write_line(line)
+
+
+def pytest_sessionfinish(session, exitstatus):
+    summary_lines = session.config.stash.get(MARKET_SUMMARY_LINES_KEY, [])
+    if not summary_lines:
+        return
+
+    try:
+        send_email_report(
+            host=Config.market_smtp_host,
+            port=Config.market_smtp_port,
+            username=Config.market_smtp_username,
+            password=Config.market_smtp_password,
+            recipient=Config.market_report_email,
+            subject=f"Daily market analysis - {session.config.rootpath.name}",
+            body="\n".join(summary_lines),
+        )
+    except (OSError, SMTPException, ValueError) as error:
+        session.exitstatus = max(exitstatus, pytest.ExitCode.TESTS_FAILED)
+        print(f"Market summary email failed: {error}", flush=True)
+    else:
+        print(
+            f"Market summary email sent to {Config.market_report_email}.",
+            flush=True,
+        )
 
 
 # ----------------------------------------------------------------------------
