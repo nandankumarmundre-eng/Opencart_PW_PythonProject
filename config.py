@@ -24,7 +24,7 @@ class Config:
     practice_url = os.getenv("PLAYWRIGHT_BASE_URL") or "https://testautomationpractice.blogspot.com/"
     market_symbols = os.getenv(
         "MARKET_SYMBOLS",
-        "NSE:NIFTY,DELTAIN:BTCUSD.P,MCX:NATURALGASM2026,MCX:CRUDEOILX2026",
+        "NSE:NIFTY,BTCUSD,MCX:NATURALGASM2026,MCX:CRUDEOILX2026",
     )
     market_report_email = os.getenv(
         "MARKET_REPORT_EMAIL",

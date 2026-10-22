@@ -4,6 +4,8 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass
 from datetime import date, datetime, time, timedelta, timezone
 from email.utils import parsedate_to_datetime
+import json
+import math
 import re
 from urllib.error import URLError
 from urllib.parse import urlencode, urlparse
@@ -44,17 +46,13 @@ MARKET_TIMEZONE = timezone(timedelta(hours=5, minutes=30), "IST")
 
 SYMBOL_SEARCH_TERMS = {
     "NSE:NIFTY": "NIFTY 50 India index",
-    "DELTAIN:BTCUSD.P": "Bitcoin BTC cryptocurrency price Delta Exchange",
+    "BTCUSD": "Bitcoin BTC USD spot price",
     "MCX:NATURALGASM2026": "natural gas futures Henry Hub prices MCX India",
     "MCX:CRUDEOILX2026": "crude oil futures Brent WTI prices MCX India",
 }
 
 PRIMARY_SOURCE_QUERIES = {
     "NSE:NIFTY": "site:nseindia.com OR site:rbi.org.in OR site:mospi.gov.in",
-    "DELTAIN:BTCUSD.P": (
-        "site:delta.exchange OR site:cmegroup.com OR site:coindesk.com "
-        "OR site:cointelegraph.com"
-    ),
     "MCX:NATURALGASM2026": (
         "site:mcxindia.com OR site:eia.gov OR site:cmegroup.com OR site:opec.org"
     ),
@@ -125,6 +123,14 @@ class NewsArticle:
     forecast_horizon: str = "Not specified"
 
 
+@dataclass(frozen=True)
+class MarketPriceSnapshot:
+    price: float
+    change_pct_24h: float
+    source: str
+    as_of: datetime
+
+
 @dataclass
 class SymbolAnalysis:
     symbol: str
@@ -135,6 +141,7 @@ class SymbolAnalysis:
     articles: list[NewsArticle]
     window_summaries: dict[str, str]
     errors: list[str]
+    price_snapshot: MarketPriceSnapshot | None = None
 
 
 class MarketNewsAnalyzer:
@@ -150,10 +157,34 @@ class MarketNewsAnalyzer:
 
     @staticmethod
     def _search_term(symbol: str) -> str:
+        if MarketNewsAnalyzer._is_btcusd(symbol):
+            return SYMBOL_SEARCH_TERMS["BTCUSD"]
         return SYMBOL_SEARCH_TERMS.get(symbol, symbol.replace(":", " "))
 
+    @staticmethod
+    def _is_btcusd(symbol: str) -> bool:
+        return symbol.upper() in {"BTCUSD", "BTC-USD", "DELTAIN:BTCUSD.P"}
+
+    @classmethod
+    def _is_relevant_title(
+        cls,
+        symbol: str,
+        title: str,
+        source: str = "",
+    ) -> bool:
+        if not cls._is_btcusd(symbol):
+            return True
+        source_suffix = f" - {source}"
+        if source and title.casefold().endswith(source_suffix.casefold()):
+            title = title[: -len(source_suffix)]
+        return re.search(
+            r"\b(?:bitcoin|btc[\s/-]*usd|btc)\b",
+            title,
+            re.IGNORECASE,
+        ) is not None
+
     def _session_start(self, symbol: str) -> datetime:
-        if symbol == "DELTAIN:BTCUSD.P":
+        if self._is_btcusd(symbol):
             return self.now.astimezone(timezone.utc) - timedelta(hours=24)
 
         market_close = next(
@@ -184,12 +215,15 @@ class MarketNewsAnalyzer:
 
     def _build_search_query(self, symbol: str, topic_query: str, window: str) -> str:
         start, end = self._window_bounds(symbol, window)
-        source_query = PRIMARY_SOURCE_QUERIES.get(symbol, "")
-        combined_query = (
-            f"({topic_query}) OR ({source_query})"
-            if source_query
-            else topic_query
-        )
+        if self._is_btcusd(symbol):
+            combined_query = topic_query
+        else:
+            source_query = PRIMARY_SOURCE_QUERIES.get(symbol, "")
+            combined_query = (
+                f"({topic_query}) OR ({source_query})"
+                if source_query
+                else topic_query
+            )
         return (
             f'{self._search_term(symbol)} ({combined_query}) '
             f"after:{start.date().isoformat()} before:"
@@ -280,7 +314,12 @@ class MarketNewsAnalyzer:
             )
             published_text = item.findtext("pubDate")
             published = self._parse_date(published_text)
-            if not title or not link or not self._is_in_window(symbol, window, published):
+            if (
+                not title
+                or not link
+                or not self._is_relevant_title(symbol, title, source)
+                or not self._is_in_window(symbol, window, published)
+            ):
                 continue
             evidence_type, analyst_or_entity = self._classify_evidence(topic, source)
             articles.append(
@@ -328,6 +367,7 @@ class MarketNewsAnalyzer:
         symbol: str,
         articles: list[NewsArticle],
         errors: list[str],
+        price_snapshot: MarketPriceSnapshot | None = None,
     ) -> SymbolAnalysis:
         window_priority = {
             "current session": 3,
@@ -399,8 +439,43 @@ class MarketNewsAnalyzer:
             explanation = (
                 f"{chosen} directional headlines versus {opposing} opposing headlines "
                 f"across {source_count} current-session sources. Past context and upcoming "
-                "expectations are shown separately. This is a headline-sentiment signal only."
+                "expectations are shown separately. This is a headline-sentiment signal "
+                "only, not a calibrated probability or investment recommendation."
             )
+
+        if self._is_btcusd(symbol):
+            if price_snapshot is None:
+                if action in {"BUY", "SELL"}:
+                    action = "SIDEWAYS"
+                explanation += (
+                    " A current BTC-USD spot quote was unavailable, so no "
+                    "price-confirmed directional signal is issued."
+                )
+            elif action in {"BUY", "SELL"}:
+                price_is_confirming = (
+                    action == "BUY" and price_snapshot.change_pct_24h > 0
+                ) or (
+                    action == "SELL" and price_snapshot.change_pct_24h < 0
+                )
+                if price_is_confirming:
+                    explanation += (
+                        f" The headline direction agrees with the BTC-USD 24-hour "
+                        f"spot move ({price_snapshot.change_pct_24h:+.2f}%)."
+                    )
+                else:
+                    action = "SIDEWAYS"
+                    explanation += (
+                        f" Headline direction conflicts with or is not confirmed by "
+                        f"the BTC-USD 24-hour spot move "
+                        f"({price_snapshot.change_pct_24h:+.2f}%); no directional "
+                        "signal is issued."
+                    )
+            else:
+                explanation += (
+                    f" BTC-USD spot is {price_snapshot.change_pct_24h:+.2f}% over "
+                    "24 hours; this price move is reported separately and does not "
+                    "create a directional signal by itself."
+                )
 
         window_summaries = {
             "past context": (
@@ -425,6 +500,49 @@ class MarketNewsAnalyzer:
             articles=unique_articles,
             window_summaries=window_summaries,
             errors=errors,
+            price_snapshot=price_snapshot,
+        )
+
+    def _fetch_btcusd_snapshot(
+        self,
+    ) -> tuple[MarketPriceSnapshot | None, str | None]:
+        request = Request(
+            "https://api.exchange.coinbase.com/products/BTC-USD/stats",
+            headers={"User-Agent": "Mozilla/5.0 (compatible; MarketNewsSummary/1.0)"},
+        )
+        try:
+            with urlopen(request, timeout=10) as response:
+                payload = json.loads(response.read())
+        except (
+            URLError,
+            TimeoutError,
+            UnicodeDecodeError,
+            json.JSONDecodeError,
+        ) as error:
+            return None, f"BTCUSD spot quote (Coinbase): {error}"
+
+        try:
+            opening_price = float(payload["open"])
+            current_price = float(payload["last"])
+        except (KeyError, TypeError, ValueError) as error:
+            return None, f"BTCUSD spot quote (Coinbase) has an invalid response: {error}"
+
+        if (
+            not math.isfinite(opening_price)
+            or not math.isfinite(current_price)
+            or opening_price <= 0
+            or current_price <= 0
+        ):
+            return None, "BTCUSD spot quote (Coinbase) has non-positive or invalid prices"
+
+        return (
+            MarketPriceSnapshot(
+                price=current_price,
+                change_pct_24h=(current_price / opening_price - 1) * 100,
+                source="Coinbase BTC-USD",
+                as_of=datetime.now(timezone.utc),
+            ),
+            None,
         )
 
     def analyze(self, symbol: str) -> SymbolAnalysis:
@@ -438,6 +556,7 @@ class MarketNewsAnalyzer:
             ("current session", {**TOPIC_QUERIES, "official data": "official data release OR exchange notice"}),
             ("upcoming", {**UPCOMING_QUERIES, "official schedules": "official schedule OR release calendar OR inventory report"}),
         ]
+        price_snapshot = None
         with ThreadPoolExecutor(max_workers=self.max_workers) as executor:
             futures = [
                 executor.submit(
@@ -454,10 +573,20 @@ class MarketNewsAnalyzer:
                 for topic, query in topics.items()
                 for language, region, edition in NEWS_LOCALES
             ]
+            price_future = (
+                executor.submit(self._fetch_btcusd_snapshot)
+                if self._is_btcusd(symbol)
+                else None
+            )
             for future in as_completed(futures):
                 topic_articles, error = future.result()
                 articles.extend(topic_articles)
                 if error:
                     errors.append(error)
 
-        return self._summarize(symbol, articles, errors)
+            if price_future is not None:
+                price_snapshot, price_error = price_future.result()
+                if price_error:
+                    errors.append(price_error)
+
+        return self._summarize(symbol, articles, errors, price_snapshot)

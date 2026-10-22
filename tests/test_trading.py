@@ -1,6 +1,6 @@
 import allure
 import pytest
-from datetime import date, datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 from unittest.mock import MagicMock, patch
 
 from conftest import (
@@ -9,7 +9,12 @@ from conftest import (
     pytest_terminal_summary,
 )
 from config import Config
-from pages.market_news_analyzer import MARKET_TIMEZONE, MarketNewsAnalyzer, NewsArticle
+from pages.market_news_analyzer import (
+    MARKET_TIMEZONE,
+    MarketNewsAnalyzer,
+    MarketPriceSnapshot,
+    NewsArticle,
+)
 from utilities.email_report import send_email_report
 
 
@@ -28,15 +33,35 @@ def test_analyze_market_news(request, market_symbol):
     analyzer = MarketNewsAnalyzer()
     result = analyzer.analyze(market_symbol)
     summary_line = (
-        f"{result.symbol} : {result.action} : {result.confidence_pct}%"
+        f"{result.symbol} : {result.action} : "
+        f"{result.confidence_pct}% news consensus"
     )
+    if result.price_snapshot:
+        summary_line += (
+            f" : ${result.price_snapshot.price:,.2f} "
+            f"({result.price_snapshot.change_pct_24h:+.2f}% 24h)"
+        )
+    elif result.symbol.upper() in {"BTCUSD", "BTC-USD", "DELTAIN:BTCUSD.P"}:
+        summary_line += " : BTC-USD spot quote unavailable"
     request.config.stash.setdefault(MARKET_SUMMARY_LINES_KEY, []).append(summary_line)
+
+    spot_line = ""
+    if result.price_snapshot:
+        spot_line = (
+            f"BTC-USD spot: ${result.price_snapshot.price:,.2f} "
+            f"({result.price_snapshot.change_pct_24h:+.2f}% 24h) via "
+            f"{result.price_snapshot.source} as of "
+            f"{result.price_snapshot.as_of.isoformat()}\n"
+        )
+    elif result.symbol.upper() in {"BTCUSD", "BTC-USD", "DELTAIN:BTCUSD.P"}:
+        spot_line = "BTC-USD spot: Not available\n"
 
     allure.attach(
         f"Symbol: {result.symbol}\n"
         f"Analysis date (IST): {result.analysis_date.isoformat()}\n"
         f"Action: {result.action}\n"
         f"News-consensus strength (not a probability): {result.confidence_pct}%\n"
+        f"{spot_line}"
         f"Assessment: {result.explanation}\n"
         f"Window summaries:\n"
         + "\n".join(
@@ -107,6 +132,83 @@ def test_insufficient_coverage_returns_sideways_with_zero_confidence():
     assert result.action == "SIDEWAYS"
     assert result.confidence_pct == 0
     assert result.errors == ["network unavailable"]
+
+
+@pytest.mark.end_to_end
+def test_btcusd_uses_direct_spot_symbol_and_24_hour_window():
+    now = datetime(2026, 10, 21, 12, 0, tzinfo=MARKET_TIMEZONE)
+    analyzer = MarketNewsAnalyzer(now=now)
+    session_start, _ = analyzer._window_bounds("BTCUSD", "current session")
+    query = analyzer._build_search_query(
+        "BTCUSD", "expert forecast OR price analysis", "current session"
+    )
+
+    assert session_start == now.astimezone(timezone.utc) - timedelta(hours=24)
+    assert "Bitcoin BTC USD spot price" in query
+    assert "site:" not in query
+    assert MarketNewsAnalyzer._is_relevant_title("BTCUSD", "Bitcoin price outlook")
+    assert MarketNewsAnalyzer._is_relevant_title("BTCUSD", "BTC/USD analysis")
+    assert not MarketNewsAnalyzer._is_relevant_title(
+        "BTCUSD",
+        "XRP price forecast - Bitcoin Foundation",
+        "Bitcoin Foundation",
+    )
+    assert not MarketNewsAnalyzer._is_relevant_title(
+        "BTCUSD", "PepeCoin Cryptocurrency price prediction"
+    )
+
+
+@pytest.mark.end_to_end
+def test_btcusd_direction_requires_price_confirmation():
+    analyzer = MarketNewsAnalyzer()
+    articles = [
+        _article(index, "Bitcoin bullish breakout gains higher")
+        for index in range(1, 7)
+    ]
+    falling_snapshot = MarketPriceSnapshot(
+        price=80_000,
+        change_pct_24h=-2.5,
+        source="Coinbase BTC-USD",
+        as_of=datetime.now(timezone.utc),
+    )
+
+    result = analyzer._summarize("BTCUSD", articles, [], falling_snapshot)
+
+    assert result.action == "SIDEWAYS"
+    assert result.price_snapshot == falling_snapshot
+    assert "conflicts with or is not confirmed" in result.explanation
+
+
+@pytest.mark.end_to_end
+def test_btcusd_without_spot_quote_does_not_issue_directional_signal():
+    analyzer = MarketNewsAnalyzer()
+    articles = [
+        _article(index, "Bitcoin bullish breakout gains higher")
+        for index in range(1, 7)
+    ]
+
+    result = analyzer._summarize("BTCUSD", articles, [])
+
+    assert result.action == "SIDEWAYS"
+    assert "spot quote was unavailable" in result.explanation
+
+
+@pytest.mark.end_to_end
+def test_btcusd_quote_calculates_24_hour_change():
+    analyzer = MarketNewsAnalyzer()
+    with patch("pages.market_news_analyzer.urlopen") as open_url:
+        response = MagicMock()
+        response.__enter__.return_value.read.return_value = (
+            b'{"open":"80000","last":"82000"}'
+        )
+        open_url.return_value = response
+
+        snapshot, error = analyzer._fetch_btcusd_snapshot()
+
+    assert error is None
+    assert snapshot is not None
+    assert snapshot.price == 82_000
+    assert snapshot.change_pct_24h == pytest.approx(2.5)
 
 
 @pytest.mark.end_to_end
